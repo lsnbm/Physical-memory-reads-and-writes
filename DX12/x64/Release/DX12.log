@@ -1,7 +1,0 @@
-﻿  main.cpp
-C:\Users\liaoshuang\Desktop\LS-Driver\DX12\main.cpp(637,51): warning C4018: “>=”: 有符号/无符号不匹配
-  正在生成代码
-  Previous IPDB not found, fall back to full compilation.
-  All 799 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
-  已完成代码的生成
-  DX12.vcxproj -> C:\Users\liaoshuang\Desktop\LS-Driver\x64\Release\DX12.exe
