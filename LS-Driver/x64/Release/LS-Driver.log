@@ -1,0 +1,33 @@
+﻿  Building 'LS-Driver' with toolset 'WindowsKernelModeDriver10.0' and the 'Universal' target platform.
+  driver.cpp
+C:\Users\liaoshuang\Desktop\LS-Driver\LS-Driver\driver.hpp(37,7): warning C4273: “KeBugCheckEx”: dll 链接不一致
+  (编译源文件“driver.cpp”)
+      D:\Windows Kits\10\Include\10.0.26100.0\km\wdm.h(24326,1):
+      参见“KeBugCheckEx”的前一个定义
+  
+C:\Users\liaoshuang\Desktop\LS-Driver\LS-Driver\PhysicalMemoryApi.h(317,18): warning C4996: 'ExAllocatePoolWithTag': ExAllocatePoolWithTag is deprecated, use ExAllocatePool2.
+  (编译源文件“driver.cpp”)
+  
+C:\Users\liaoshuang\Desktop\LS-Driver\LS-Driver\DirectPhysicalMemory.h(77,25): warning C4018: “>=”: 有符号/无符号不匹配
+  (编译源文件“driver.cpp”)
+  
+C:\Users\liaoshuang\Desktop\LS-Driver\LS-Driver\DirectPhysicalMemory.h(77,71): warning C4018: “<”: 有符号/无符号不匹配
+  (编译源文件“driver.cpp”)
+  
+  main.cpp
+C:\Users\liaoshuang\Desktop\LS-Driver\LS-Driver\driver.hpp(37,7): warning C4273: “KeBugCheckEx”: dll 链接不一致
+  (编译源文件“main.cpp”)
+      D:\Windows Kits\10\Include\10.0.26100.0\km\wdm.h(24326,1):
+      参见“KeBugCheckEx”的前一个定义
+  
+  正在生成代码
+  Previous IPDB not found, fall back to full compilation.
+  All 42 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  已完成代码的生成
+  LS-Driver.vcxproj -> C:\Users\liaoshuang\Desktop\LS-Driver\x64\Release\LS-Driver.sys
+  Done Adding Additional Store
+  Successfully signed: C:\Users\liaoshuang\Desktop\LS-Driver\x64\Release\LS-Driver.sys
+  
+  Driver is 'Universal'.
+  Inf2Cat task was skipped as there were no inf files to process
+  
