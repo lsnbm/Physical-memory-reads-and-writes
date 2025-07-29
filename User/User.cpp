@@ -16,14 +16,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include"driver_data.h"
-// 用于存储进程信息的辅助结构体
+
 struct ProcessInfo {
 	uint32_t pid;
 	uint32_t parentPid;
 };
 
-//此函数的增强版能够处理一个进程（如启动器）启动另一个同名进程（如游戏主程序）的情况。
-//它会优先返回那个作为子进程的PID。
+
 uint32_t GetPidByName(const wchar_t* procName) {
 	std::vector<ProcessInfo> matchingProcs;
 
@@ -75,9 +74,7 @@ uint32_t GetPidByName(const wchar_t* procName) {
 		}
 	}
 
-	// 如果上面的逻辑没有找到（例如，父进程已经退出，或者父进程名称不同），
-	// 我们可以采用一个备用策略：返回那个不作为任何其他匹配进程之父的进程。
-	// 这通常是进程链的末端，即主游戏进程。
+
 	for (const auto& proc : matchingProcs) {
 		bool isParent = false;
 		for (const auto& otherProc : matchingProcs) {
