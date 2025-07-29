@@ -2,54 +2,32 @@
 
 
 
-/*
-static È«¾ÖÖ÷Òª×÷ÓÃ¾ÍÊÇ:
-	1.´æ·ÅÔÚÊý¾Ý¶Î(¾²Ì¬´æ´¢Çø)
-	2.ÄÚ²¿Á´½Ó(ÎÞ·¨Ê¹ÓÃexternÒ²ÎÞ·¨ÒýÓÃ)
-	3.ÉúÃüÖÜÆÚÎªÕû¸ö³ÌÐòÔËÐÐÆÚ¼ä
-static ¾Ö²¿Ö÷Òª×÷ÓÃ¾ÍÊÇ:
-	1.´æ·ÅÔÚÊý¾Ý¶Î(¾²Ì¬´æ´¢Çø)
-	2.ÄÚ²¿Á´½Ó(ÎÞ·¨Ê¹ÓÃexternÒ²ÎÞ·¨ÒýÓÃ)
-	3.ÉúÃüÖÜÆÚÎªÕû¸ö³ÌÐòÔËÐÐÆÚ¼ä
-	4.½öº¯Êýµ÷ÓÃ³õÊ¼»¯Ò»´ÎºóÐø¸´ÓÃ
-*/
-
-/*
-ÌØÐÔ				inline __forceinline										static	inline __forceinline
-Á´½ÓÐÔ				ÄÚ²¿Á´½Ó (Internal Linkage)									Íâ²¿Á´½Ó (External Linkage)
-¿É¼ûÐÔ				½öÔÚµ±Ç°±àÒëµ¥Ôª (.cpp ÎÄ¼þ)ÄÚ¿É¼û							ÔÚÕû¸ö³ÌÐòÖÐ¿É¼û
-ÈçºÎ±ÜÃâÁ´½Ó´íÎó	Ã¿¸öÎÄ¼þÉú³ÉÒ»¸öË½ÓÐ¸±±¾£¬Á´½ÓÆ÷»¥²»¸ÉÈÅ					inline ¹Ø¼ü×Ö¸æÖªÁ´½ÓÆ÷ºÏ²¢¶à¸öÏàÍ¬µÄ¶¨Òå
-Ê¹ÓÃ³¡¾°			C ÓïÑÔ·ç¸ñ£¬C/C++ ÖÐ¶¼·Ç³£°²È«¿É¿¿	ÏÖ´ú C++ ·ç¸ñ£¬			ÓÃÓÚÔÚÍ·ÎÄ¼þÖÐÊµÏÖº¯ÊýÌå
-ºËÐÄË¼Ïë			¡°ÎªÎÒ×Ô¼ºµÄÎÄ¼þ´´½¨Ò»¸ö±¾µØ¸±±¾¡±							¡°ÕâÊÇÒ»¸öÈ«¾Öº¯Êý£¬µ«ÎÒÔÊÐíËüÓÐ¶à·ÝÏàÍ¬µÄ¶¨Òå¡±
-
-*/
-
 NTSTATUS DriverEntry(
-	PDRIVER_OBJECT  pDriverObject,/*¼ÓÔØÇý¶¯»áÊµÀý»¯Õâ¸öÇý¶¯¶ÔÏó£ºÓÃÀ´ÃèÊöÇý¶¯½á¹¹*/
-	PUNICODE_STRING pRegistryPath/*Çý¶¯×¢²á±íÂ·¾¶*/
+	PDRIVER_OBJECT  pDriverObject,
+	PUNICODE_STRING pRegistryPath
 )
 {
-	//ÕâÊÇÒ»¸öºê£¬ÓÃÓÚ¸æËß±àÒëÆ÷Õâ¸ö²ÎÊýÎ´±»Ê¹ÓÃ£¬ÒÔ±ÜÃâ±àÒëÆ÷·¢³öÎ´Ê¹ÓÃ²ÎÊýµÄ¾¯¸æ
+	//è¿™æ˜¯ä¸€ä¸ªå®ï¼Œç”¨äºŽå‘Šè¯‰ç¼–è¯‘å™¨è¿™ä¸ªå‚æ•°æœªè¢«ä½¿ç”¨ï¼Œä»¥é¿å…ç¼–è¯‘å™¨å‘å‡ºæœªä½¿ç”¨å‚æ•°çš„è­¦å‘Š
 	UNREFERENCED_PARAMETER(pRegistryPath);
 
 	DbgPrint("Driver:%wZ\n", pRegistryPath);
 	NTSTATUS status;
-	static UNICODE_STRING devName;//¶¨ÒåÒ»¸öUNICODE_STRING½á¹¹Ìå£¬ÓÃÓÚ´æ´¢Éè±¸Ãû³Æ¡£
-	static UNICODE_STRING symLink;//´´½¨·ûºÅÁ´½Ó£¬ÓÃ»§Ä£Ê½¿ÉÒÔÍ¨¹ý¸ÃÁ´½Ó·ÃÎÊÉè±¸
-	// ´´½¨Éè±¸¶ÔÏó
-	RtlInitUnicodeString(&devName, L"\\Device\\liaoStarDriver");              //¶¯Ì¬³õÊ¼»¯Éè±¸¶ÔÏó
-	RtlInitUnicodeString(&symLink, L"\\DosDevices\\liaoStarDriver");          //¶¯Ì¬³õÊ¼»¯·ûºÅÁ´½Ó
+	static UNICODE_STRING devName;
+	static UNICODE_STRING symLink;
+	// åˆ›å»ºè®¾å¤‡å¯¹è±¡
+	RtlInitUnicodeString(&devName, L"\\Device\\liaoStarDriver");              //åŠ¨æ€åˆå§‹åŒ–è®¾å¤‡å¯¹è±¡
+	RtlInitUnicodeString(&symLink, L"\\DosDevices\\liaoStarDriver");          //åŠ¨æ€åˆå§‹åŒ–ç¬¦å·é“¾æŽ¥
 
 
-	PDEVICE_OBJECT pDeviceObject = NULL;//¶¨ÒåÒ»¸öÉè±¸¶ÔÏóÖ¸Õë
+	PDEVICE_OBJECT pDeviceObject = NULL;//å®šä¹‰ä¸€ä¸ªè®¾å¤‡å¯¹è±¡æŒ‡é’ˆ
 	status = IoCreateDevice(
-		pDriverObject,            // Çý¶¯¶ÔÏó£¬¿ÉÒÔ³¢ÊÔÎªÆäËûÇý¶¯´´½¨Éè±¸¶ÔÏó
-		00,                      // Éè±¸À©Õ¹´óÐ¡(¾ÍÊÇ·ÖÅäÄÚ´æ¿Õ¼ä£¬0±íÊ¾²»ÉêÇëÄÚ´æ£¬200±íÊ¾·ÖÅä200×Ö½Ú)
-		&devName,               // Éè±¸Ãû³Æ
-		FILE_DEVICE_UNKNOWN,   // Éè±¸ÀàÐÍ
-		0,                    // Éè±¸ÌØÕ÷
-		TRUE,               // Éè±¸ÊÇ·ñ¶ÀÕ¼
-		&pDeviceObject      // ´«³öÉè±¸¶ÔÏóÖ¸Õë
+		pDriverObject,        
+		00,                     
+		&devName,          
+		FILE_DEVICE_UNKNOWN,  
+		0,                  
+		TRUE,            
+		&pDeviceObject    
 	);
 	if (!NT_SUCCESS(status)) {
 		DbgPrint("Failed to create device object:%x\n", status);
@@ -57,10 +35,10 @@ NTSTATUS DriverEntry(
 	}
 	DbgPrint("Created DeviceObject successfully\n");
 
-	status = IoCreateSymbolicLink(&symLink, &devName);//´´½¨·ûºÅÁ´½Ó·µ»Ø×´Ì¬Âë
+	status = IoCreateSymbolicLink(&symLink, &devName);//åˆ›å»ºç¬¦å·é“¾æŽ¥è¿”å›žçŠ¶æ€ç 
 	if (!NT_SUCCESS(status)) {
-		DbgPrint("Failed to create symbolic link:%x\n", status);//´òÓ¡´íÎó×´Ì¬ÂëÐÅÏ¢
-		IoDeleteDevice(pDeviceObject);//É¾³ýÉè±¸¶ÔÏó
+		DbgPrint("Failed to create symbolic link:%x\n", status);//æ‰“å°é”™è¯¯çŠ¶æ€ç ä¿¡æ¯
+		IoDeleteDevice(pDeviceObject);//åˆ é™¤è®¾å¤‡å¯¹è±¡
 		return status;
 	}
 	DbgPrint("Symbolic link created successfully\n");
@@ -68,35 +46,35 @@ NTSTATUS DriverEntry(
 
 
 
-	//ÉèÖÃÇý¶¯Æ÷Îª»º³åÊäÈëÊä³öÄ£Ê½
+	//è®¾ç½®é©±åŠ¨å™¨ä¸ºç¼“å†²è¾“å…¥è¾“å‡ºæ¨¡å¼
    // SetFlag(pDeviceObject->Flags, DO_BUFFERED_IO);
-	// Ö±½ÓIOÄ£Ê½
+	// ç›´æŽ¥IOæ¨¡å¼
 	//SetFlag(pDeviceObject->Flags, DO_DIRECT_IO);
 
-	 // »òÕß²»ÉèÖÃÈÎºÎ±êÖ¾£¬ÈÃËüÊ¹ÓÃMETHOD_NEITHER
+	 // æˆ–è€…ä¸è®¾ç½®ä»»ä½•æ ‡å¿—ï¼Œè®©å®ƒä½¿ç”¨METHOD_NEITHER
 
 
 
 
 
-	// ÉèÖÃÓÃ»§´ò¿ªÉè±¸´¦Àíº¯Êý
+	// è®¾ç½®ç”¨æˆ·æ‰“å¼€è®¾å¤‡å¤„ç†å‡½æ•°
 	pDriverObject->MajorFunction[IRP_MJ_CREATE] = DeviceCC;
-	// ÉèÖÃÓÃ»§¹Ø±ÕÉè±¸´¦Àíº¯Êý
+	// è®¾ç½®ç”¨æˆ·å…³é—­è®¾å¤‡å¤„ç†å‡½æ•°
 	pDriverObject->MajorFunction[IRP_MJ_CLOSE] = DeviceCC;
 
-	//µ±¹Ø±ÕÎÄ¼þ¾ä±ú»ò¶Ï¿ªÓëÉè±¸µÄÁ¬½ÓÊ±,Í¨ÖªÇý¶¯³ÌÐò½øÐÐ±ØÒªµÄÇåÀí¹¤×÷µÄ»Øµ÷º¯Êý
+	//å½“å…³é—­æ–‡ä»¶å¥æŸ„æˆ–æ–­å¼€ä¸Žè®¾å¤‡çš„è¿žæŽ¥æ—¶,é€šçŸ¥é©±åŠ¨ç¨‹åºè¿›è¡Œå¿…è¦çš„æ¸…ç†å·¥ä½œçš„å›žè°ƒå‡½æ•°
 	pDriverObject->MajorFunction[IRP_MJ_CLEANUP] = DeviceCC;
 
-	// ÉèÖÃÓÃ»§Çý¶¯Ð¶ÔØ´¦Àíº¯Êý
+	// è®¾ç½®ç”¨æˆ·é©±åŠ¨å¸è½½å¤„ç†å‡½æ•°
 	pDriverObject->DriverUnload = DriverUnload;
-	// ÉèÖÃ´¦ÀíÉè±¸¿ØÖÆÇëÇóº¯Êý
+	// è®¾ç½®å¤„ç†è®¾å¤‡æŽ§åˆ¶è¯·æ±‚å‡½æ•°
 	pDriverObject->MajorFunction[IRP_MJ_DEVICE_CONTROL] = DriverDeviceControl;
 	/*
-	ÏêÏ¸½âÊÍ£º
-		µ±ÓÃ»§ÇëÇó´ò¿ªÉè±¸Ê±²Ù×÷ÏµÍ³»áÉú³ÉIRP_MJ_CREATEÇëÇó£¬²¢´«µÝ¸øÇý¶¯³ÌÐò´¦Àí
-		Çý¶¯ÊÕµ½ÇëÇóÊ±»áµ÷ÓÃMajorFunction[IRP_MJ_CREATE] À´×¢²áÒ»¸öº¯ÊýÀ´´¦ÀíÇëÇó
-		»á½«Éè±¸ÉèÖÃÎª´ò¿ª×´Ì¬£¬
-		Õâ¸öº¯ÊýÊ¾ÀýÖÐÃ»ÓÐ´¦ÀíÈÎºÎ¸´ÔÓÂß¼­(Èç¼ì²éÈ¨ÏÞ£¬×ÊÔ´·ÖÅäµÈ).
+	è¯¦ç»†è§£é‡Šï¼š
+		å½“ç”¨æˆ·è¯·æ±‚æ‰“å¼€è®¾å¤‡æ—¶æ“ä½œç³»ç»Ÿä¼šç”ŸæˆIRP_MJ_CREATEè¯·æ±‚ï¼Œå¹¶ä¼ é€’ç»™é©±åŠ¨ç¨‹åºå¤„ç†
+		é©±åŠ¨æ”¶åˆ°è¯·æ±‚æ—¶ä¼šè°ƒç”¨MajorFunction[IRP_MJ_CREATE] æ¥æ³¨å†Œä¸€ä¸ªå‡½æ•°æ¥å¤„ç†è¯·æ±‚
+		ä¼šå°†è®¾å¤‡è®¾ç½®ä¸ºæ‰“å¼€çŠ¶æ€ï¼Œ
+		è¿™ä¸ªå‡½æ•°ç¤ºä¾‹ä¸­æ²¡æœ‰å¤„ç†ä»»ä½•å¤æ‚é€»è¾‘(å¦‚æ£€æŸ¥æƒé™ï¼Œèµ„æºåˆ†é…ç­‰).
 	*/
 
 
